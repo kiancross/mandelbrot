@@ -2,64 +2,62 @@
  * Copyright (C) 2021 Kian Cross
  */
 
-package mandelbrot;
+package com.kiancross.mandelbrot;
 
-import typedtextfield.DoubleTextField;
-import typedtextfield.IntegerTextField;
-
+import com.kiancross.typedtextfield.DoubleTextField;
+import com.kiancross.typedtextfield.IntegerTextField;
 import java.io.File;
 import java.io.IOException;
-
+import javafx.animation.PauseTransition;
 import javafx.application.Application;
-import javafx.stage.Stage;
-import javafx.stage.FileChooser;
+import javafx.collections.FXCollections;
+import javafx.embed.swing.SwingFXUtils;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.Scene;
-import javafx.scene.Node;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.FlowPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
 import javafx.scene.Group;
+import javafx.scene.Node;
+import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
-import javafx.scene.shape.Rectangle;
-import javafx.scene.paint.Color;
+import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.Alert;
-import javafx.scene.text.Text;
 import javafx.scene.control.Control;
+import javafx.scene.control.Label;
 import javafx.scene.image.PixelWriter;
-import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.text.Font;
 import javafx.scene.image.WritableImage;
-import javafx.animation.PauseTransition;
-import javafx.collections.FXCollections;
-import javafx.embed.swing.SwingFXUtils;
-import javax.imageio.ImageIO;
+import javafx.scene.layout.FlowPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Font;
+import javafx.scene.text.Text;
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 import javafx.util.Duration;
+import javax.imageio.ImageIO;
 
 /**
  * GUI for the explorer using JavaFX.
-*/
+ */
 public class View extends Application {
 
   /**
    * The canvas used to draw the image.
-  */
+   */
   final Canvas canvas = new Canvas();
 
   /**
    * The image generator used to generate the image.
-  */
+   */
   final ImageGenerator imageGenerator;
 
   /**
    * Constructor to create the GUI.
-  */
+   */
   public View() {
     imageGenerator = new ImageGenerator(getColorThemes()[0]);
   }
@@ -83,16 +81,16 @@ public class View extends Application {
     // user can click anywhere on the screen to remove focus from a text field
     // and redraw the UI.
     root.setOnMouseClicked(e -> root.requestFocus());
-    
+
     root.getChildren().addAll(optionsPane, imageGroup);
 
-    final double INITIAL_WIDTH = 1000;
-    final double INITIAL_HEIGHT = 800;
+    final double initialWidth = 1000;
+    final double initialHeight = 800;
 
     primaryStage.setScene(scene);
     primaryStage.setTitle("Mandelbrot Explorer");
-    primaryStage.setMinWidth(INITIAL_WIDTH);
-    primaryStage.setMinHeight(INITIAL_HEIGHT);
+    primaryStage.setMinWidth(initialWidth);
+    primaryStage.setMinHeight(initialHeight);
     primaryStage.show();
   }
 
@@ -100,7 +98,7 @@ public class View extends Application {
    * Displays an exception in a dialog to the user.
    *
    * @param e The exception to display.
-  */
+   */
   private void displayException(final Throwable e) {
     final Alert alert = new Alert(Alert.AlertType.ERROR);
     alert.setTitle("Error");
@@ -111,19 +109,20 @@ public class View extends Application {
     group.getChildren().addAll(new Text(e.getMessage()));
     alert.getDialogPane().setContent(group);
 
-    alert.showAndWait(); 
+    alert.showAndWait();
   }
 
   /**
    * Add a resize listener that is called when the screen is resized.
    *
    * @param scene The scene which fires the resize events.
-   * @param optionsPane The options pane at the top of the screen - this is required
-   * because it's height must be subtracted from the height of the canvas.
-  */
+   * @param optionsPane The options pane at the top of the screen - this is required because it's
+   *        height must be subtracted from the height of the canvas.
+   */
   private void addSceneResizeListeners(final Scene scene, final Pane optionsPane) {
 
-    // Here a debouncer is used to only actually call the callback once there have been
+    // Here a debouncer is used to only actually call the callback once there have
+    // been
     // no events fired for 100ms. Otherwise, when the user resized the window, the
     // callback would be called for each pixel change in size, which would in turn
     // recalculate all the Mandelbrot iteration values. The result would be a very
@@ -144,14 +143,14 @@ public class View extends Application {
   }
 
   /**
-   * Defines some preset colour themes that the user can select when drawing
-   * the image.
+   * Defines some preset colour themes that the user can select when drawing the image.
    *
    * @return An array of colour gradients, which are the themes.
-  */
+   */
   private ColorGradient[] getColorThemes() {
-    
-    final ColorGradient bulb = new ColorGradient(Color.rgb(35, 240, 199), Color.rgb(255, 227, 71), "Bulb");
+
+    final ColorGradient bulb =
+        new ColorGradient(Color.rgb(35, 240, 199), Color.rgb(255, 227, 71), "Bulb");
     bulb.setStop(1 / 4.0, Color.rgb(239, 118, 122));
     bulb.setStop(2 / 4.0, Color.rgb(125, 122, 188));
     bulb.setStop(3 / 4.0, Color.rgb(100, 87, 166));
@@ -159,39 +158,43 @@ public class View extends Application {
     final ColorGradient fire = new ColorGradient(Color.BLACK, Color.WHITE, "Fire");
     fire.setStop(0.2, Color.rgb(255, 0, 0));
     fire.setStop(0.8, Color.rgb(255, 255, 0));
-    
+
     final ColorGradient ocean = new ColorGradient(Color.BLACK, Color.WHITE, "Ocean");
     ocean.setStop(1 / 5.0, Color.rgb(44, 115, 210));
     ocean.setStop(2 / 5.0, Color.rgb(0, 129, 207));
     ocean.setStop(3 / 5.0, Color.rgb(0, 137, 186));
     ocean.setStop(4 / 5.0, Color.rgb(0, 142, 155));
-    
-    final ColorGradient capillary = new ColorGradient(Color.rgb(8, 15, 15), Color.rgb(138, 3, 3), "Capillary");
+
+    final ColorGradient capillary =
+        new ColorGradient(Color.rgb(8, 15, 15), Color.rgb(138, 3, 3), "Capillary");
     capillary.setStop(1 / 4.0, Color.rgb(164, 186, 183));
     capillary.setStop(2 / 4.0, Color.rgb(239, 242, 192));
     capillary.setStop(3 / 4.0, Color.rgb(190, 165, 125));
 
-    final ColorGradient eco = new ColorGradient(Color.rgb(0, 36, 0), Color.rgb(219, 210, 224), "Eco");
+    final ColorGradient eco =
+        new ColorGradient(Color.rgb(0, 36, 0), Color.rgb(219, 210, 224), "Eco");
     eco.setStop(1 / 4.0, Color.rgb(39, 59, 9));
     eco.setStop(2 / 4.0, Color.rgb(88, 100, 29));
     eco.setStop(3 / 4.0, Color.rgb(123, 144, 75));
-    
+
     final ColorGradient grey = new ColorGradient(Color.BLACK, Color.WHITE, "Grey");
 
-    // Everything is white, apart from the values that lie within the set which are always
+    // Everything is white, apart from the values that lie within the set which are
+    // always
     // set to black by the ColorGradient.
-    final ColorGradient blackAndWhite = new ColorGradient(Color.WHITE, Color.WHITE, "Black and White");
- 
+    final ColorGradient blackAndWhite =
+        new ColorGradient(Color.WHITE, Color.WHITE, "Black and White");
+
     return new ColorGradient[] {bulb, fire, ocean, capillary, eco, grey, blackAndWhite};
   }
- 
+
   /**
    * Generate a HBox from a set of nodes.
    *
    * @param nodes A set of nodes to be added to the HBox.
    * @return The HBox that has been generated.
-  */ 
-  private HBox generateHBox(final Node ... nodes) {
+   */
+  private HBox generateHbox(final Node... nodes) {
     final HBox hbox = new HBox();
 
     hbox.setSpacing(8);
@@ -204,11 +207,11 @@ public class View extends Application {
   /**
    * Get the options pane, which contains all the configurable parameters.
    *
-   * @param stage The parent stage for the options pane - this is required for when
-   * dialogs are displayed.
+   * @param stage The parent stage for the options pane - this is required for when dialogs are
+   *        displayed.
    *
    * @return The options pane.
-  */
+   */
   private Pane getOptionsPane(final Stage stage) {
 
     final FlowPane root = new FlowPane();
@@ -218,18 +221,18 @@ public class View extends Application {
 
     root.setPadding(new Insets(8, 8, 8, 8));
 
-    root.getChildren().addAll(
-      getUndoButton(), getRedoButton(), getResetAllButton(), getExportStateButton(stage),
-      getImportStateButton(stage), getExportImageButton(stage), getOverlayZoomCheckBox(),
+    root.getChildren().addAll(getUndoButton(), getRedoButton(), getResetAllButton(),
+        getExportStateButton(stage), getImportStateButton(stage), getExportImageButton(stage),
+        getOverlayZoomCheckBox(),
 
-      // HBoxes are used within the options pane so that these items always appear next to
-      // each other and aren't broken up by the FlowPane.
-      generateHBox(new Label("Colour Scheme:"), getColorThemesComboBox()),
-      generateHBox(new Label("Pan X Amount:"), getPanXNode()),
-      generateHBox(new Label("Pan Y Amount:"), getPanYNode()),
-      generateHBox(new Label("Maximum Iterations:"), getMaximumIterationsTextField()),
-      generateHBox(new Label("Escape Radius:"), getEscapeRadiusTextField())
-    );
+        // HBoxes are used within the options pane so that these items always appear
+        // next to
+        // each other and aren't broken up by the FlowPane.
+        generateHbox(new Label("Colour Scheme:"), getColorThemesComboBox()),
+        generateHbox(new Label("Pan X Amount:"), getPanNodeX()),
+        generateHbox(new Label("Pan Y Amount:"), getPanNodeY()),
+        generateHbox(new Label("Maximum Iterations:"), getMaximumIterationsTextField()),
+        generateHbox(new Label("Escape Radius:"), getEscapeRadiusTextField()));
 
     return root;
   }
@@ -238,7 +241,7 @@ public class View extends Application {
    * Returns the maximum iterations text field.
    *
    * @return The maximum iterations text field.
-  */
+   */
   private Control getMaximumIterationsTextField() {
     final IntegerTextField textField = new IntegerTextField(1);
     textField.setPrefWidth(80);
@@ -249,9 +252,8 @@ public class View extends Application {
     // If the configuration changes, set the value of this text field to the value
     // in the configuration.
     imageGenerator.getCurrentConfigurationProperty().addListener(
-      (a, b, configuration) -> textField.setTypedValue(configuration.getMaximumIterations()),
-      true
-    );
+        (a, b, configuration) -> textField.setTypedValue(configuration.getMaximumIterations()),
+        true);
 
     // When focus is lost, update the image generator with the new value.
     textField.focusedProperty().addListener((a, b, focused) -> {
@@ -267,21 +269,19 @@ public class View extends Application {
    * Return the escape radius text field.
    *
    * @return The escape radius text field.
-  */
+   */
   private Control getEscapeRadiusTextField() {
 
-    final DoubleTextField textField = new DoubleTextField(0) ;
+    final DoubleTextField textField = new DoubleTextField(0);
     textField.setPrefWidth(80);
     textField.addValidator((value) -> {
       return value >= 0;
     });
-    
+
     // If the configuration changes, set the value of this text field to the value
     // in the configuration.
     imageGenerator.getCurrentConfigurationProperty().addListener(
-      (a, b, configuration) -> textField.setTypedValue(configuration.getEscapeRadius()),
-      true
-    );
+        (a, b, configuration) -> textField.setTypedValue(configuration.getEscapeRadius()), true);
 
     // When focus is lost, update the image generator with the new value.
     textField.focusedProperty().addListener((a, b, focused) -> {
@@ -292,53 +292,52 @@ public class View extends Application {
 
     return textField;
   }
-  
+
   /**
    * Get the pan y node. This includes the button and text field.
    *
    * @return The pan y node.
-  */
-  private Node getPanYNode() {
+   */
+  private Node getPanNodeY() {
     final Button button = new Button("Pan Y");
 
     final IntegerTextField textField = new IntegerTextField(0);
     textField.setPrefWidth(80);
-   
-    // When the button is pressed, pan in the y direction. 
+
+    // When the button is pressed, pan in the y direction.
     button.setOnAction(event -> {
       imageGenerator.pan(canvas.getWidth(), canvas.getHeight(), 0, textField.getTypedValue());
     });
 
-    return generateHBox(textField, button);
+    return generateHbox(textField, button);
   }
 
   /**
    * Get the pan x node. This includes the button and text field.
    *
    * @return The pan x node.
-  */
-  private Node getPanXNode() {
+   */
+  private Node getPanNodeX() {
 
     final IntegerTextField textField = new IntegerTextField(0);
     textField.setPrefWidth(80);
-    
+
     final Button button = new Button("Pan X");
 
-    // When the button is pressed, pan in the x direction. 
+    // When the button is pressed, pan in the x direction.
     button.setOnAction(event -> {
       imageGenerator.pan(canvas.getWidth(), canvas.getHeight(), textField.getTypedValue(), 0);
     });
 
-    return generateHBox(textField, button);
+    return generateHbox(textField, button);
   }
 
   /**
    * Returns the combo box used to select a colour theme.
-  */
+   */
   private Control getColorThemesComboBox() {
-    final ComboBox<ColorGradient> comboBox = new ComboBox<ColorGradient>(
-      FXCollections.observableArrayList(getColorThemes())
-    );
+    final ComboBox<ColorGradient> comboBox =
+        new ComboBox<ColorGradient>(FXCollections.observableArrayList(getColorThemes()));
 
     // If the configuration changes, set the value of this combo box to the value
     // in the configuration.
@@ -346,11 +345,12 @@ public class View extends Application {
       comboBox.setValue(configuration.getColorTheme());
     }, true);
 
-    // When the item in the combo box changes, update the configuration with the new value.
+    // When the item in the combo box changes, update the configuration with the new
+    // value.
     comboBox.getSelectionModel().selectedItemProperty().addListener((a, b, colorTheme) -> {
       imageGenerator.setColorTheme(colorTheme);
     });
-  
+
     return comboBox;
   }
 
@@ -358,10 +358,10 @@ public class View extends Application {
    * Return the overlay zoom check box.
    *
    * @return The overlay zoom check box.
-  */
+   */
   private Control getOverlayZoomCheckBox() {
     final CheckBox checkBox = new CheckBox("Overlay Zoom");
-    
+
     // If the configuration changes, set the value of this checkbox to the value
     // in the configuration.
     imageGenerator.getCurrentConfigurationProperty().addListener((a, b, configuration) -> {
@@ -369,9 +369,8 @@ public class View extends Application {
     }, true);
 
     // Update the configuration when the value changes.
-    checkBox.selectedProperty().addListener(
-      (a, b, checked) -> imageGenerator.setOverlayZoom(checked)
-    );
+    checkBox.selectedProperty()
+        .addListener((a, b, checked) -> imageGenerator.setOverlayZoom(checked));
 
     return checkBox;
   }
@@ -379,11 +378,10 @@ public class View extends Application {
   /**
    * Get the export image button.
    *
-   * @param stage The parent stage (used to display a model file selection
-   * dialog).
+   * @param stage The parent stage (used to display a model file selection dialog).
    *
    * @return The export image button.
-  */
+   */
   private Control getExportImageButton(final Stage stage) {
 
     final Button button = new Button("Export Image");
@@ -392,11 +390,9 @@ public class View extends Application {
     button.setOnAction(event -> {
 
       // Create a writeable image.
-      final WritableImage writableImage = new WritableImage(
-        (int) canvas.getWidth(),
-        (int) canvas.getHeight()
-      );
-        
+      final WritableImage writableImage =
+          new WritableImage((int) canvas.getWidth(), (int) canvas.getHeight());
+
       final FileChooser fileChooser = new FileChooser();
       final File file = fileChooser.showSaveDialog(stage);
 
@@ -406,7 +402,7 @@ public class View extends Application {
 
         // Take a snapshot of the canvas.
         canvas.snapshot((s) -> {
-          
+
           try {
 
             // Convert the writeable image to a BufferedImage and then write this to
@@ -426,24 +422,22 @@ public class View extends Application {
 
     return button;
   }
-  
+
   /**
    * Get the reset all button.
    *
    * @return The reset all button.
-  */
+   */
   private Button getResetAllButton() {
-  
+
     final Button button = new Button("Reset All");
 
     // When the button is pressed.
     button.setOnAction((e) -> imageGenerator.resetAll());
 
     // If the configuration changes, update the button's disabled state.
-    imageGenerator.getCurrentConfigurationProperty().addListener(
-      (a, b, c) -> button.setDisable(!imageGenerator.canUndo()),
-      true
-    );
+    imageGenerator.getCurrentConfigurationProperty()
+        .addListener((a, b, c) -> button.setDisable(!imageGenerator.canUndo()), true);
 
     return button;
 
@@ -453,19 +447,17 @@ public class View extends Application {
    * Get the undo button.
    *
    * @return The undo button.
-  */
+   */
   private Button getUndoButton() {
-  
+
     final Button button = new Button("Undo");
 
     // When the button is pressed.
     button.setOnAction((e) -> imageGenerator.undo());
 
     // If the configuration changes, update the button's disabled state.
-    imageGenerator.getCurrentConfigurationProperty().addListener(
-      (a, b, c) -> button.setDisable(!imageGenerator.canUndo()),
-      true
-    );
+    imageGenerator.getCurrentConfigurationProperty()
+        .addListener((a, b, c) -> button.setDisable(!imageGenerator.canUndo()), true);
 
     return button;
   }
@@ -474,19 +466,17 @@ public class View extends Application {
    * Get the redo button.
    *
    * @return The redo button.
-  */
+   */
   private Button getRedoButton() {
-  
+
     final Button button = new Button("Redo");
 
     // When the button is pressed.
     button.setOnAction((e) -> imageGenerator.redo());
 
     // If the configuration changes, update the button's disabled state.
-    imageGenerator.getCurrentConfigurationProperty().addListener(
-      (a, b, c) -> button.setDisable(!imageGenerator.canRedo()),
-      true
-    );
+    imageGenerator.getCurrentConfigurationProperty()
+        .addListener((a, b, c) -> button.setDisable(!imageGenerator.canRedo()), true);
 
     return button;
 
@@ -497,9 +487,9 @@ public class View extends Application {
    *
    * @param stage The parent stage - used to display the file selector.
    * @return The export state button.
-  */
+   */
   private Control getExportStateButton(final Stage stage) {
-  
+
     final Button button = new Button("Export State");
 
     button.setOnAction(event -> {
@@ -529,11 +519,11 @@ public class View extends Application {
    *
    * @param stage The parent stage - used to display the file selector.
    * @return The import state button.
-  */
+   */
   private Control getImportStateButton(final Stage stage) {
 
     final Button button = new Button("Import State");
-    
+
     button.setOnAction(event -> {
 
       final FileChooser fileChooser = new FileChooser();
@@ -555,37 +545,37 @@ public class View extends Application {
 
     return button;
   }
- 
+
   /**
-   * Returns the image group. This is the part of the UI that contains the
-   * Mandelbrot image, zoom rectangle and zoom amount.
+   * Returns the image group. This is the part of the UI that contains the Mandelbrot image, zoom
+   * rectangle and zoom amount.
    *
    * @return The image group.
-  */
+   */
   private Group getImageGroup() {
-    
+
     final Group group = new Group();
-    
+
     final Rectangle zoomRectangle = new Rectangle();
 
     zoomRectangle.setFill(Color.TRANSPARENT);
     zoomRectangle.setStroke(Color.BLUE);
     zoomRectangle.setStrokeWidth(2);
     zoomRectangle.setVisible(false);
-    
+
     // When the mouse is clicked, set the x and y of the rectangle to
-    // the position where the mouse was clicked.  
+    // the position where the mouse was clicked.
     group.setOnMousePressed((mouseEvent) -> {
       zoomRectangle.setX(mouseEvent.getX());
       zoomRectangle.setY(mouseEvent.getY());
       zoomRectangle.setVisible(true);
     });
-    
+
     // When the mouse pressed is released, do the zoom action.
     group.setOnMouseReleased((mouseEvent) -> {
       final double rectangleWidth = zoomRectangle.getWidth();
       final double rectangleHeight = zoomRectangle.getHeight();
-      
+
       zoomRectangle.setVisible(false);
       zoomRectangle.setWidth(0);
       zoomRectangle.setHeight(0);
@@ -599,11 +589,8 @@ public class View extends Application {
       final double rectangleX = zoomRectangle.getX();
       final double rectangleY = zoomRectangle.getY();
 
-      imageGenerator.zoom(
-        canvas.getWidth(), canvas.getHeight(),
-        rectangleX, rectangleX + rectangleWidth,
-        rectangleY + rectangleHeight, rectangleY
-      );
+      imageGenerator.zoom(canvas.getWidth(), canvas.getHeight(), rectangleX,
+          rectangleX + rectangleWidth, rectangleY + rectangleHeight, rectangleY);
     });
 
     // When the mouse is dragged, update the hight and width of the rectangle.
@@ -614,7 +601,7 @@ public class View extends Application {
       zoomRectangle.setWidth(rectangleWidth);
       zoomRectangle.setHeight(rectangleWidth * widthScaleFactor);
     });
-   
+
     group.getChildren().addAll(canvas, zoomRectangle);
 
     return group;
@@ -622,7 +609,7 @@ public class View extends Application {
 
   /**
    * Redraw the mandelbrot image.
-  */
+   */
   private void redrawImage() {
 
     final GraphicsContext graphicsContext = canvas.getGraphicsContext2D();
@@ -631,16 +618,14 @@ public class View extends Application {
     final double xRange = canvas.getWidth();
     final double yRange = canvas.getHeight();
 
-    // The resolution is the integer value of the width and height (has to be a whole number
+    // The resolution is the integer value of the width and height (has to be a
+    // whole number
     // of pixels).
     final int xResolution = (int) xRange;
     final int yResolution = (int) yRange;
 
     // Get the image.
-    final Color[][] image = imageGenerator.generate(
-      xResolution,
-      yResolution
-    );
+    final Color[][] image = imageGenerator.generate(xResolution, yResolution);
 
     // Write the image to the canvas.
     for (int x = 0; x < image.length; x++) {
@@ -663,9 +648,8 @@ public class View extends Application {
       graphicsContext.setFont(new Font(22));
       graphicsContext.setLineWidth(2);
 
-      final String currentZoomText = String.format(
-        "Zoom: %.2f", imageGenerator.getCurrentZoom(xRange, yRange)
-      );
+      final String currentZoomText =
+          String.format("Zoom: %.2f", imageGenerator.getCurrentZoom(xRange, yRange));
 
       // Use white text with a black outline. This ensures it can be read
       // on any coloured background.

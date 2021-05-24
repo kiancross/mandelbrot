@@ -2,37 +2,36 @@
  * Copyright (C) 2021 Kian Cross
  */
 
-package mandelbrot;
+package com.kiancross.mandelbrot;
 
-import java.util.Map;
-import java.util.Set;
-import java.util.HashMap;
 import java.io.Serializable;
+import java.util.HashMap;
+import java.util.Map;
 import javafx.scene.paint.Color;
 
 /**
  * Represents a colour gradient.
-*/
+ */
 public class ColorGradient implements Serializable {
-  
+
   private static final long serialVersionUID = 1;
-  
+
   /**
    * The data structure used to store the gradient.
-  */
+   */
   private final Map<Double, SerializableColor> colorMap = new HashMap<Double, SerializableColor>();
 
   /**
-   * The name of the gradient (human readable);
-  */
+   * The name of the gradient (human readable).
+   */
   private String name;
 
   /**
-   * Used by the equals method - but should not be accessed outside of the
-   * class itself, hence the protected modifier.
+   * Used by the equals method - but should not be accessed outside of the class itself, hence the
+   * protected modifier.
    * 
    * @return The color map data structure.
-  */
+   */
   protected Map<Double, SerializableColor> getColorMap() {
     return colorMap;
   }
@@ -40,10 +39,10 @@ public class ColorGradient implements Serializable {
   /**
    * Construct a color gradient.
    *
-   * @param The start colour.
-   * @param The end colour.
-   * @param The name of the gradient.
-  */
+   * @param start The start colour.
+   * @param end The end colour.
+   * @param name The name of the gradient.
+   */
   public ColorGradient(final Color start, final Color end, final String name) {
 
     this.name = name;
@@ -51,13 +50,13 @@ public class ColorGradient implements Serializable {
     colorMap.put((double) 0, new SerializableColor(start));
     colorMap.put((double) 1, new SerializableColor(end));
   }
-  
+
   /**
    * Set a stop within the gradient.
    *
    * @param stop The stop: a number in-between 0 and 1.
    * @param color The color corresponding to this stop.
-  */
+   */
   public void setStop(final double stop, final Color color) {
 
     if (stop < 0 || stop > 1) {
@@ -69,7 +68,7 @@ public class ColorGradient implements Serializable {
 
   /**
    * Get the color at a given position.
-  */   
+   */
   public Color getColor(final double position) {
 
     if (position < 0 || position > 1) {
@@ -82,8 +81,8 @@ public class ColorGradient implements Serializable {
 
     // Find the smallest value greater than the given position and
     // the largest value smaller than the given position.
-    for (Double stop: colorMap.keySet()) {
-      
+    for (Double stop : colorMap.keySet()) {
+
       if (position > stop && stop > start) {
         start = stop;
 
@@ -103,7 +102,7 @@ public class ColorGradient implements Serializable {
 
   @Override
   public boolean equals(final Object o) {
-    
+
     if (!(o instanceof ColorGradient)) {
       return false;
     }
@@ -121,5 +120,5 @@ public class ColorGradient implements Serializable {
   @Override
   public String toString() {
     return name;
-  } 
+  }
 }

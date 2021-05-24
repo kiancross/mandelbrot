@@ -2,7 +2,7 @@
  * Copyright (C) 2021 Kian Cross
  */
 
-package mandelbrot;
+package com.kiancross.mandelbrot;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
@@ -14,15 +14,15 @@ import org.junit.jupiter.api.Test;
 
 /**
  * Tests for the bound class.
-*/
+ */
 public class BoundTests {
 
   /**
    * Test getting the minimum value.
-  */
+   */
   @Test
   public void testGetMinimum() {
-    
+
     final ComplexNumber minimum = new ComplexNumber(1, 1);
     final ComplexNumber maximum = new ComplexNumber(2, 2);
 
@@ -33,10 +33,10 @@ public class BoundTests {
 
   /**
    * Test getting the maximum value.
-  */
+   */
   @Test
   public void testGetMaximum() {
-    
+
     final ComplexNumber minimum = new ComplexNumber(1, 1);
     final ComplexNumber maximum = new ComplexNumber(2, 2);
 
@@ -47,7 +47,7 @@ public class BoundTests {
 
   /**
    * Test passing null as the minimum value throws an exception.
-  */
+   */
   @Test
   public void testNullMinimumThrows() {
     assertThrows(IllegalArgumentException.class, () -> {
@@ -57,17 +57,17 @@ public class BoundTests {
 
   /**
    * Test passing null as the maximum value throws an exception.
-  */
+   */
   @Test
   public void testNullMaximumThrows() {
     assertThrows(IllegalArgumentException.class, () -> {
       new Bound(new ComplexNumber(1, 1), null);
     });
   }
-  
+
   /**
    * Test that the getRange method works.
-  */
+   */
   @Test
   public void testGetRange() {
     final ComplexNumber minimum = new ComplexNumber(1, 1);
@@ -77,11 +77,10 @@ public class BoundTests {
 
     assertEquals(maximum.minus(minimum), bound.getRange());
   }
-  
+
   /**
-   * Test the isEquals implementation with two instances that should be
-   * equal.
-  */
+   * Test the isEquals implementation with two instances that should be equal.
+   */
   @Test
   public void testIsEquals() {
     final ComplexNumber minimum1 = new ComplexNumber(1, 1);
@@ -95,11 +94,10 @@ public class BoundTests {
 
     assertEquals(bound1, bound2);
   }
-  
+
   /**
-   * Test the isEquals implementation with two instances that should not be
-   * equal.
-  */
+   * Test the isEquals implementation with two instances that should not be equal.
+   */
   @Test
   public void testIsNotEquals() {
     final ComplexNumber minimum1 = new ComplexNumber(1, 1);

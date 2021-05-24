@@ -2,34 +2,34 @@
  * Copyright (C) 2021 Kian Cross
  */
 
-package mandelbrot;
+package com.kiancross.mandelbrot;
 
-import java.lang.Math;
 import java.io.Serializable;
+import java.lang.Math;
 
 /**
  * Represents a complex number.
-*/
+ */
 public class ComplexNumber implements Serializable {
-  
+
   private static final long serialVersionUID = 1;
 
   /**
    * The real part of the complex number.
-  */
-  final private double real;
+   */
+  private final double real;
 
   /**
    * The imaginary part of the complex number.
-  */
-  final private double imaginary;
-  
+   */
+  private final double imaginary;
+
   /**
    * Constructs a complex number.
    *
    * @param real The real part of the complex number.
    * @param imaginary The imaginary part of the complex number.
-  */
+   */
   public ComplexNumber(final double real, final double imaginary) {
     this.real = real;
     this.imaginary = imaginary;
@@ -39,16 +39,16 @@ public class ComplexNumber implements Serializable {
    * Get the real part of the complex number.
    *
    * @return The real part of the complex number.
-  */
+   */
   public double getReal() {
     return real;
   }
-  
+
   /**
    * Get the imaginary part of the complex number.
    *
    * @return The imaginary part of the complex number.
-  */
+   */
   public double getImaginary() {
     return imaginary;
   }
@@ -57,7 +57,7 @@ public class ComplexNumber implements Serializable {
    * Calculate the modulus of the complex number.
    *
    * @return The modulus of the complex number.
-  */
+   */
   public double getModulus() {
     return Math.sqrt(getAbsoluteSquare());
   }
@@ -66,7 +66,7 @@ public class ComplexNumber implements Serializable {
    * Calculate the absolute square of the complex number.
    *
    * @return The absolute square of the complex number.
-  */
+   */
   public double getAbsoluteSquare() {
     return (real * real) + (imaginary * imaginary);
   }
@@ -75,7 +75,7 @@ public class ComplexNumber implements Serializable {
    * Calculate the square of the complex number.
    *
    * @return The square of the complex number.
-  */
+   */
   public ComplexNumber square() {
     return multiply(this);
   }
@@ -85,7 +85,7 @@ public class ComplexNumber implements Serializable {
    *
    * @param b Complex number to multiply with this complex number.
    * @return The resultant complex number.
-  */
+   */
   public ComplexNumber multiply(final ComplexNumber b) {
 
     final double newReal = (getReal() * b.getReal()) - (getImaginary() * b.getImaginary());
@@ -93,13 +93,13 @@ public class ComplexNumber implements Serializable {
 
     return new ComplexNumber(newReal, newImaginary);
   }
- 
+
   /**
    * Multiply a complex number with a scalar.
    *
    * @param s The scalar to multiple this complex number by.
    * @return The resultant complex number.
-  */ 
+   */
   public ComplexNumber multiply(final double s) {
     return new ComplexNumber(s * getReal(), s * getImaginary());
   }
@@ -109,18 +109,18 @@ public class ComplexNumber implements Serializable {
    *
    * @param b The complex number to add to this complex number.
    * @return The resultant complex number.
-  */
+   */
   public ComplexNumber add(final ComplexNumber b) {
     return new ComplexNumber(getReal() + b.getReal(), getImaginary() + b.getImaginary());
   }
 
   /**
-   * Take a complex number away from this complex number. This is the same as
-   * calling add(b.multiply(-1)).
+   * Take a complex number away from this complex number. This is the same as calling
+   * add(b.multiply(-1)).
    *
    * @param b The complex number to takeaway from this complex number.
    * @return The resultant complex number.
-  */
+   */
   public ComplexNumber minus(final ComplexNumber b) {
     return add(b.multiply(-1));
   }
@@ -145,8 +145,8 @@ public class ComplexNumber implements Serializable {
   @Override
   public int hashCode() {
 
-    //Taken from: https://medium.com/codelog/overriding-hashcode-
-    //            method-effective-java-notes-723c1fedf51c
+    // Taken from: https://medium.com/codelog/overriding-hashcode-
+    // method-effective-java-notes-723c1fedf51c
 
     int result = 17;
 
