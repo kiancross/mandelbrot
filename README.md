@@ -59,8 +59,8 @@ below.
 ![Mandelbrot Set Example Grey](https://github.com/kiancross/mandelbrot/blob/master/examples/grey.png)
 
 ## Developers
-Developers can use `gradlew` script to build and test the
-application. `gradlew tasks` will show all the available
+Developers can use the `./gradlew` script to build and test the
+application. `./gradlew tasks` will show all of the available
 commands and their descriptions.
 
 ## License
