@@ -41,7 +41,7 @@ public class ImageConfiguration implements Serializable {
 
   /**
    * A builder (using the builder design pattern) to create an
-   * {@link mandelbrot.ImageConfiguration}.
+   * {@link com.kiancross.mandelbrot.ImageConfiguration}.
    */
   public static class Builder {
 
@@ -144,7 +144,7 @@ public class ImageConfiguration implements Serializable {
     }
 
     /**
-     * Builds an {@link mandelbrot.ImageConfiguration} from the set values.
+     * Builds an {@link com.kiancross.mandelbrot.ImageConfiguration} from the set values.
      *
      * @return The configuration.
      */
