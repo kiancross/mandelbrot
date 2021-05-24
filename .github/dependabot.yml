@@ -1,0 +1,10 @@
+#
+# (c) 2021 Kian Cross
+#
+
+version: 2
+updates:
+  - package-ecosystem: "gradle"
+    directory: "/"
+    schedule:
+      interval: "daily"

@@ -1,0 +1,59 @@
+/*
+ * (c) 2021 Kian Cross
+ */
+
+plugins {
+  id "java"
+  id "application"
+  id "jacoco"
+  id "checkstyle"
+  id "pmd"
+  id "com.github.spotbugs" version "4.7.1"
+  id "com.github.johnrengelman.shadow" version "7.0.0"
+  id "org.openjfx.javafxplugin" version "0.0.10"
+}
+
+javafx {
+  version = "11.0.2"
+  modules = ["javafx.controls", "javafx.swing"]
+}
+
+repositories { 
+  mavenCentral() 
+}
+
+test {
+  useJUnitPlatform()
+  finalizedBy jacocoTestReport
+}
+
+jacocoTestReport {
+  dependsOn test 
+  reports {
+    xml.enabled true
+    html.enabled true
+  }
+}
+
+dependencies {
+  testImplementation "org.junit.jupiter:junit-jupiter-api:5.7.2"
+  testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:5.7.2"
+}
+
+shadowJar {
+  minimize()
+  archiveBaseName.set("mandelbrot")
+  archiveClassifier.set("")
+  archiveVersion.set(System.getenv("MANDELBROT_VERSION"))
+}
+
+pmd {
+  ruleSets = ["category/java/errorprone.xml", "category/java/bestpractices.xml"]
+}
+
+tasks.withType(AbstractArchiveTask) {
+  preserveFileTimestamps = false
+  reproducibleFileOrder = true
+}
+
+mainClassName = "com.kiancross.mandelbrot.Main"
