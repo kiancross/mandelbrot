@@ -2,9 +2,8 @@
  * Copyright (C) 2021 Kian Cross
  */
 
-package typedtextfield;
+package com.kiancross.typedtextfield;
 
-import javafx.scene.control.TextField;
 import javafx.beans.property.SimpleDoubleProperty;
 
 /**
@@ -15,7 +14,7 @@ public class DoubleTextField extends TypedTextField<Double, SimpleDoubleProperty
   /**
    * The default value of the text field.
   */
-  final private double defaultValue;
+  private final double defaultValue;
 
   /**
    * Constructor for the text field.
@@ -28,7 +27,7 @@ public class DoubleTextField extends TypedTextField<Double, SimpleDoubleProperty
 
   @Override
   protected Double getTypedValueFromString(
-    final String stringValue
+      final String stringValue
   ) throws InvalidValueException {
   
     try {

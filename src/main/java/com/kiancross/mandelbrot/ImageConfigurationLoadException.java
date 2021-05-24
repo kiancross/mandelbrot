@@ -2,22 +2,20 @@
  * Copyright (C) 2021 Kian Cross
  */
 
-package mandelbrot;
+package com.kiancross.mandelbrot;
 
 /**
- * Exception thrown if there is an error loading the image configuration
- * from file.
-*/
+ * Exception thrown if there is an error loading the image configuration from file.
+ */
 public class ImageConfigurationLoadException extends Exception {
+  private static final long serialVersionUID = 1;
 
-    private final static long serialVersionUID = 1;
-
-    /**
-     * Construct the exception.
-     *
-     * @param e The exception that triggered this exception.
-    */
-    public ImageConfigurationLoadException(final Throwable e) {
-      super(e);
-    }
+  /**
+   * Construct the exception.
+   *
+   * @param e The exception that triggered this exception.
+   */
+  public ImageConfigurationLoadException(final Throwable e) {
+    super(e);
+  }
 }
