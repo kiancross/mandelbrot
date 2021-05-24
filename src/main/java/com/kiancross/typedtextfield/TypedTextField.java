@@ -182,7 +182,7 @@ public abstract class TypedTextField<T, S extends WritableValue<? super T>> exte
 
   /**
    * Set the typed value. Note that we can do this inside the abstract class, unlike
-   * {@link typedtextfield.TypedTextField#getTypedValue}.
+   * {@link com.kiancross.typedtextfield.TypedTextField#getTypedValue}.
    */
   public void setTypedValue(final T value) {
     setText(value.toString());

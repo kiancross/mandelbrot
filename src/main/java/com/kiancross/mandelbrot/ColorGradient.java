@@ -68,6 +68,10 @@ public class ColorGradient implements Serializable {
 
   /**
    * Get the color at a given position.
+   *
+   * @param position Value between 0 and 1 representing the position in the gradient.
+   *
+   * @return The color.
    */
   public Color getColor(final double position) {
 

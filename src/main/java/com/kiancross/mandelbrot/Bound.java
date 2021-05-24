@@ -59,6 +59,8 @@ public class Bound implements Serializable {
 
   /**
    * Get the range of the minimum and maximum.
+   *
+   * @return The range of the bound.
    */
   public ComplexNumber getRange() {
     return maximum.minus(minimum);

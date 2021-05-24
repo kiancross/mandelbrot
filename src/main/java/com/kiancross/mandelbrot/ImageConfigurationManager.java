@@ -46,7 +46,8 @@ public class ImageConfigurationManager {
   }
 
   /**
-   * Undo the last call to {@link mandelbrot.ImageConfigurationManager#addConfiguration}.
+   * Undo the last call to
+   * {@link com.kiancross.mandelbrot.ImageConfigurationManager#addConfiguration}.
    */
   public void undo() {
     future.addFirst(history.removeFirst());
@@ -54,7 +55,7 @@ public class ImageConfigurationManager {
   }
 
   /**
-   * Redo the last call to {@link mandelbrot.ImageConfigurationManager#undo}.
+   * Redo the last call to {@link com.kiancross.mandelbrot.ImageConfigurationManager#undo}.
    */
   public void redo() {
     history.addFirst(future.removeFirst());
