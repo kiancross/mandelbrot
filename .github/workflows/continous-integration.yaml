@@ -9,6 +9,8 @@ on:
     branches: [ master ]
   pull_request:
     branches: [ master ]
+  schedule:
+    - cron: "30 23 * * 3"
 
 jobs:
   build:
@@ -89,3 +91,26 @@ jobs:
           ./gradlew --stop
           rm -f ~/.gradle/caches/modules-2/modules-2.lock
           rm -f ~/.gradle/caches/modules-2/gc.properties
+  
+  codeql:
+    name: CodeQL Analysis
+    runs-on: ubuntu-latest
+    needs: build
+    permissions:
+      actions: read
+      contents: read
+      security-events: write
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Initialize CodeQL ⚙️
+        uses: github/codeql-action/init@v1
+        with:
+          languages: java
+
+      - name: Build 🧰
+        run: ./gradlew jar
+
+      - name: Perform CodeQL Analysis 🤖
+        uses: github/codeql-action/analyze@v1
