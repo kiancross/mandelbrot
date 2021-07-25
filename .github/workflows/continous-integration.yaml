@@ -112,6 +112,8 @@ jobs:
           distribution: adopt
           java-version: 11
 
+      - uses: kiancross/java-annotations-checkstyle@v1
+
       - uses: actions/cache@v2
         with:
           path: |
@@ -123,13 +125,6 @@ jobs:
 
       - name: Checkstyle 👠
         run: ./gradlew checkstyle${{ matrix.set }}
-
-      - name: Upload Checkstyle Annotations 📤
-        uses: jwgmeligmeyling/checkstyle-github-action@v1.2
-        if: ${{ success() || failure() }}
-        with:
-          name: Checkstyle (${{ matrix.set }})
-          path: build/reports/checkstyle/${{ matrix.set }}.xml
 
       - name: Cleanup Gradle Cache
         shell: bash
