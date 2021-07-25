@@ -3,6 +3,7 @@
 [![Continuous Integration](https://github.com/kiancross/mandelbrot/actions/workflows/continous-integration.yaml/badge.svg?event=push)](https://github.com/kiancross/mandelbrot/actions/workflows/continous-integration.yaml)
 [![Continuous Integration](https://github.com/kiancross/mandelbrot/actions/workflows/codeql.yaml/badge.svg?event=schedule)](https://github.com/kiancross/mandelbrot/actions/workflows/codeql.yaml)
 [![codecov](https://codecov.io/gh/kiancross/mandelbrot/branch/master/graph/badge.svg?token=cFjwBIoJ4c)](https://codecov.io/gh/kiancross/mandelbrot)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://github.com/kiancross/mandelbrot/blob/master/LICENSE)
 
 A [Mandelbrot set](https://en.wikipedia.org/wiki/Mandelbrot_set) explorer
 written in Java.
