@@ -112,7 +112,7 @@ jobs:
           distribution: adopt
           java-version: 11
 
-      - uses: kiancross/java-annotations-checkstyle@v1
+      - uses: kiancross/checkstyle-annotations-action@v1
 
       - uses: actions/cache@v2
         with:
