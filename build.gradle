@@ -10,7 +10,7 @@ plugins {
   id "pmd"
   id "com.github.spotbugs" version "5.0.4"
   id "com.github.johnrengelman.shadow" version "7.1.2"
-  id "org.openjfx.javafxplugin" version "0.0.10"
+  id "org.openjfx.javafxplugin" version "0.0.11"
 }
 
 javafx {
