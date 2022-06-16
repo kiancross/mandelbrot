@@ -8,7 +8,7 @@ plugins {
   id "jacoco"
   id "checkstyle"
   id "pmd"
-  id "com.github.spotbugs" version "5.0.7"
+  id "com.github.spotbugs" version "5.0.8"
   id "com.github.johnrengelman.shadow" version "7.1.2"
   id "org.openjfx.javafxplugin" version "0.0.13"
 }
