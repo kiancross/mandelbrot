@@ -65,7 +65,7 @@ Developers can use the `./gradlew` script to build and test the
 application. `./gradlew tasks` will show all of the available
 commands and their descriptions.
 
-Developer documentation is available [here](kiancross.github.io/mandelbrot/).
+Developer documentation is available [here](https://kiancross.github.io/mandelbrot/).
 
 ## License
 
