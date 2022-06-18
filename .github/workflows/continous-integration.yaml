@@ -96,9 +96,6 @@ jobs:
     name: Checkstyle (${{ matrix.set }})
     runs-on: ubuntu-latest
     timeout-minutes: 10
-    permissions:
-      checks: write
-      contents: read
     strategy:
       fail-fast: false
       matrix:
