@@ -9,7 +9,7 @@ plugins {
   id "checkstyle"
   id "pmd"
   id "com.github.spotbugs" version "5.0.12"
-  id "com.github.johnrengelman.shadow" version "7.1.2"
+  id "com.github.johnrengelman.shadow" version "8.0.0"
   id "org.openjfx.javafxplugin" version "0.0.13"
 }
 
